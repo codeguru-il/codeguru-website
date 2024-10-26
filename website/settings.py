@@ -17,30 +17,18 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# To make sure we don't accidentally disable production on production
-IS_PRODUCTION = os.path.exists('/etc/secret_key.txt')
+DEBUG = True
 
-LANGUAGE_CODE = 'en'
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 CAN_REGISTER = True
 
-# SECURITY WARNING: keep the secret key used in production secret!
-if IS_PRODUCTION:
-    with open('/etc/secret_key.txt') as f:
-        SECRET_KEY = f.read().strip()
-else:
-    SECRET_KEY = "secret"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not IS_PRODUCTION
 
-ALLOWED_HOSTS = ['cgx.codeguru.co.il', '127.0.0.1', 'localhost']
-if IS_PRODUCTION:
-    ALLOWED_HOSTS = ['cgx.codeguru.co.il']
-USE_I18N = True
-TIME_ZONE = "Asia/Jerusalem"
+ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -99,8 +87,11 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('DBNAME'),
+        'HOST': os.getenv('DBHOST'),
+        'USER': os.getenv('DBUSER'),
+        'PASSWORD': os.getenv('DBPASS'),
     }
 }
 
@@ -124,6 +115,7 @@ LANGUAGE_CODE = 'en-us'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
+TIME_ZONE = "Asia/Jerusalem"
 
 
 # Static files (CSS, JavaScript, Images)

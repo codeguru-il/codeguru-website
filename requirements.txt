@@ -1,5 +1,6 @@
 django==5.0.6
 psycopg==3.2.3
+psycopg-binary==3.2.3
 python-dotenv==1.0.1
 django-redis==5.4.0
 django-cleanup==9.0.0
