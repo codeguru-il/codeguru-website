@@ -44,7 +44,7 @@ class CgGroup(models.Model):
     center = models.ForeignKey(Center, null=True, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return f"{self.center.ticker}_{self.name}"
 
 class Invite(models.Model):
     group = models.OneToOneField(CgGroup, on_delete=models.CASCADE)
@@ -55,6 +55,9 @@ class Invite(models.Model):
     @property
     def expired(self):
         return False
+
+    def __str__(self):
+        return f"Invite to join {self.group}"
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
