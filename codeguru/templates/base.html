@@ -5,82 +5,97 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="{{ STATIC_URL }}style.css" />
-    <title>{% block title %}CGX18{% endblock %}</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}style.css"/>
+    <title>{% block title %}CGX2024{% endblock %}</title>
     {% if LANGUAGE_CODE == "he" %}
-        <style> html { direction: rtl} </style>
+        <style> html {
+            direction: rtl
+        } </style>
     {% else %}
-        <style> html { direction: ltr} </style>
+        <style> html {
+            direction: ltr
+        } </style>
     {% endif %}
 </head>
 
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
-    * { 
-        font-size: 22px; 
+
+    * {
+        font-size: 22px;
         color: #4AF626;
         font-family: 'Space Mono', monospace;
-        background-color: rgb(24, 26, 27); 
+        background-color: rgb(24, 26, 27);
         outline: none;
     }
 
     input {
         border: 5px solid green;
     }
-    
+
+    button.link {
+        background: none;
+        border: none;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
 </style>
 
 <body>
-    <div id="header">
-        
+<div id="header">
+
     {% block header %}
-    {% comment %} <img src="{% static 'codeguru/logo.svg' %}" alt="logo" style="height: 7em; margin-bottom: 40px;"/><br> {% endcomment %}
-    <h1>{% trans "CodeGuru Extreme" %} 18</h1><br>
-    <a href="{% url 'index' %}">{% trans "Home" %}</a> | 
+        {% comment %} <img src="{% static 'codeguru/logo.svg' %}" alt="logo" style="height: 7em; margin-bottom: 40px;"/><br> {% endcomment %}
+        <h1>{% trans "CodeGuru Xtreme" %} 2024</h1><br>
+        <a href="{% url 'index' %}">{% trans "Home" %}</a> |
 
-    {% if user.is_authenticated %}
-        <a href="{% url 'group' %}">{% trans "Group" %}</a> | 
-        <a href="{% url 'challenges' %}">{% trans "Challenges" %}</a> | 
-        {% if user.is_superuser %}
-          <a href="/admin">{% trans "Admin" %}</a> | 
-        {% endif %}
-        {% trans "Logged in" %}: <a href="{% url 'profile' %}">{{ user.username }}</a>
-        (<a href="{% url 'logout' %}">{% trans "Log out" %}</a> | 
-        <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>)
-        <img src="{{user.profile.picture.url}}" style="height:1em"/>
-    {% else %}
-       <a href="{% url 'login' %}">{% trans "Log in" %}</a> | 
-       <a href="{% url 'register' %}">{% trans "Sign up" %}</a>
-    {% endif %} | 
-    <form action="{% url 'set_language' %}" method="POST" style="display: inline;">
-        {% csrf_token %}
-        <input name="next" type="hidden" value="{{ request.path }}" />
-        <input name="language" type="hidden" value="he" />
-        {% comment %} <input type="image" src="{% static 'codeguru/he.svg' %}" style="height:1em"/> {% endcomment %}
-        <input type="submit" value="{% trans "Hebrew" %}" />
-    </form>
-    &nbsp;
-    <form action="{% url 'set_language' %}" method="POST" style="display:inline;">
-        {% csrf_token %}
-        <input name="next" type="hidden" value="{{ request.path }}" />
-        <input name="language" type="hidden" value="en" />
-        {% comment %} <input type="image" src="{% static 'codeguru/en.svg' %}" style="height:1em"/> {% endcomment %}
-        <input type="submit" value="{% trans "English" %}" />
-    </form>
-    <hr />
+        {% if user.is_authenticated %}
+            <a href="{% url 'group' %}">{% trans "Group" %}</a> |
+            <a href="{% url 'challenges' %}">{% trans "Challenges" %}</a> |
+            {% if user.is_superuser %}
+                <a href="/admin">{% trans "Admin" %}</a> |
+            {% endif %}
+            {% trans "Logged in" %}: <a href="{% url 'profile' %}">{{ user.username }}</a>
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                (<button class="link" type="submit">{% trans "Log out" %}</button>
+            </form> |
+            <a href="{% url 'password_change' %}">{% trans "Change password" %}</a>)
+            <img src="{{ user.profile.picture.url }}" style="height:1em"/>
+        {% else %}
+            <a href="{% url 'login' %}">{% trans "Log in" %}</a> |
+            <a href="{% url 'register' %}">{% trans "Sign up" %}</a>
+        {% endif %} |
+        <form action="{% url 'set_language' %}" method="POST" style="display: inline;">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.path }}"/>
+            <input name="language" type="hidden" value="he"/>
+            {% comment %} <input type="image" src="{% static 'codeguru/he.svg' %}" style="height:1em"/> {% endcomment %}
+            <input type="submit" value="{% trans "Hebrew" %}"/>
+        </form>
+        &nbsp;
+        <form action="{% url 'set_language' %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.path }}"/>
+            <input name="language" type="hidden" value="en"/>
+            {% comment %} <input type="image" src="{% static 'codeguru/en.svg' %}" style="height:1em"/> {% endcomment %}
+            <input type="submit" value="{% trans "English" %}"/>
+        </form>
+        <hr/>
     {% endblock %}
-    </div>
+</div>
 
-    <div id="content">
-    
+<div id="content">
+
     {% block content %}{% endblock %}
-    </div>
+</div>
 
-    <div id="footer">
+<div id="footer">
     {% block footer %}
-        <hr />
+        <hr/>
     {% endblock %}
-    </div>
+</div>
 </body>
 
 </html>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-14 18:13+0200\n"
+"POT-Creation-Date: 2024-10-25 20:41+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,381 +19,406 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n == 2 && n % "
 "1 == 0) ? 1: (n % 10 == 0 && n % 1 == 0 && n > 10) ? 2 : 3;\n"
 
-#: codeguru/forms.py:9
+#: .\codeguru\forms.py:9
 msgid "Email"
 msgstr "מייל"
 
-#: codeguru/forms.py:10
+#: .\codeguru\forms.py:10
 msgid "First Name"
 msgstr "שם פרטי"
 
-#: codeguru/forms.py:11
+#: .\codeguru\forms.py:11
 msgid "Last Name"
 msgstr "שם משפחה"
 
-#: codeguru/forms.py:12 codeguru/models.py:63
+#: .\codeguru\forms.py:12 .\codeguru\models.py:63
 msgid "Phone Number"
 msgstr "מספר טלפון"
 
-#: codeguru/forms.py:34 codeguru/models.py:41
+#: .\codeguru\forms.py:34 .\codeguru\models.py:41
 msgid "Name"
 msgstr "שם"
 
-#: codeguru/forms.py:35
+#: .\codeguru\forms.py:35
 msgid "Ticker"
 msgstr "סמל"
 
-#: codeguru/templates/base.html:39
-msgid "CodeGuru Extreme"
+#: .\codeguru\templates\base.html:39
+msgid "CodeGuru Xtreme"
 msgstr "קודגורו אקסטרים"
 
-#: codeguru/templates/base.html:40
+#: .\codeguru\templates\base.html:40
 msgid "Home"
 msgstr "בית"
 
-#: codeguru/templates/base.html:43
+#: .\codeguru\templates\base.html:43
 msgid "Group"
 msgstr "קבוצות"
 
-#: codeguru/templates/base.html:44
+#: .\codeguru\templates\base.html:44
 msgid "Challenges"
 msgstr "אתגרים"
 
-#: codeguru/templates/base.html:46
+#: .\codeguru\templates\base.html:46
 msgid "Admin"
 msgstr "ניהול"
 
-#: codeguru/templates/base.html:48
+#: .\codeguru\templates\base.html:48
 msgid "Logged in"
 msgstr "מחובר"
 
-#: codeguru/templates/base.html:49
+#: .\codeguru\templates\base.html:49
 msgid "Log out"
 msgstr "התנתק"
 
-#: codeguru/templates/base.html:50
+#: .\codeguru\templates\base.html:50
 msgid "Change password"
 msgstr "שנה סיסמה"
 
-#: codeguru/templates/base.html:53 codeguru/templates/registration/login.html:9
-#: codeguru/templates/registration/password_reset_complete.html:8
+#: .\codeguru\templates\base.html:53
+#: .\codeguru\templates\registration\login.html:9
+#: .\codeguru\templates\registration\password_reset_complete.html:8
 msgid "Log in"
 msgstr "התחבר"
 
-#: codeguru/templates/base.html:54
+#: .\codeguru\templates\base.html:54
 msgid "Sign up"
 msgstr "הירשם"
 
-#: codeguru/templates/base.html:62
+#: .\codeguru\templates\base.html:62
 msgid "Hebrew"
 msgstr "עברית"
 
-#: codeguru/templates/base.html:71
+#: .\codeguru\templates\base.html:71
 msgid "English"
 msgstr "אנגלית"
 
-#: codeguru/templates/group.html:12
+#: .\codeguru\templates\group.html:12
 msgid "Group members"
 msgstr "חברי הקבוצה"
 
-#: codeguru/templates/group.html:16
+#: .\codeguru\templates\group.html:16
 msgid "Owner"
 msgstr "מייסד"
 
-#: codeguru/templates/group.html:17
+#: .\codeguru\templates\group.html:17
 msgid "You"
 msgstr "אתה"
 
-#: codeguru/templates/group.html:25
+#: .\codeguru\templates\group.html:25
 msgid "Use this link to join the group:"
 msgstr "השתמש בלינק הזה כדי להיכנס לקבוצה:"
 
-#: codeguru/templates/group.html:28
+#: .\codeguru\templates\group.html:28
 msgid "There is no invite code for the group yet, you can create one here:"
 msgstr "אין לינק הזמנה לקבוצה עדיין, ניתן ליצור אחד כאן:"
 
-#: codeguru/templates/group.html:31
+#: .\codeguru\templates\group.html:31
 msgid "Generate Invite Link"
 msgstr "צור קישור הזמנה"
 
-#: codeguru/templates/group.html:40
+#: .\codeguru\templates\group.html:40
 msgid "Leave Group"
 msgstr "צא מהקבוצה"
 
-#: codeguru/templates/group.html:48
+#: .\codeguru\templates\group.html:48
 msgid "You are not associated with any group, try to create a new one:"
 msgstr "אינך משוייך לשום קבוצה, אתה יכול ליצור אחת חדשה כאן:"
 
-#: codeguru/templates/group.html:52
+#: .\codeguru\templates\group.html:52
 msgid "Create Group:"
 msgstr "צור קבוצה:"
 
-#: codeguru/templates/group.html:55
+#: .\codeguru\templates\group.html:55
 msgid "Note: Spaces are not allowed in the group name."
 msgstr "שים לב: אין להשתמש ברווחים בשם הקבוצה."
 
-#: codeguru/templates/group.html:59
+#: .\codeguru\templates\group.html:59
 msgid "Create new center"
 msgstr "צור מרכז חדש"
 
-#: codeguru/templates/group.html:61
+#: .\codeguru\templates\group.html:61
 msgid "New Group"
 msgstr "קבוצה חדשה"
 
-#: codeguru/templates/group.html:65
+#: .\codeguru\templates\group.html:65
 msgid "Sorry, the registertion has ended."
 msgstr "ההרשמה נסגרה."
 
-#: codeguru/templates/index.html:6
+#: .\codeguru\templates\index.html:6
 msgid "Statistics:"
 msgstr "סטטיסטיקה:"
 
-#: codeguru/templates/index.html:7
+#: .\codeguru\templates\index.html:7
 msgid "Number of Groups: "
 msgstr "מספר הקבוצות: "
 
-#: codeguru/templates/index.html:8
+#: .\codeguru\templates\index.html:8
 msgid "Number of Users: "
 msgstr "מספר המשתמשים: "
 
-#: codeguru/templates/index.html:11
+#: .\codeguru\templates\index.html:10
 msgid "Messages board:"
 msgstr "הודעות:"
 
-#: codeguru/templates/index.html:23
+#: .\codeguru\templates\index.html:33
 msgid "No messages yet. stay tuned."
 msgstr "אין הודעות כרגע."
 
-#: codeguru/templates/index.html:27
+#: .\codeguru\templates\index.html:37
 msgid "Here are the registered groups:"
 msgstr "להלן הקבוצות הרשומות:"
 
-#: codeguru/templates/new_center.html:6
+#: .\codeguru\templates\new_center.html:6
 msgid "Create Center:"
 msgstr "צור קבוצה:"
 
-#: codeguru/templates/new_center.html:9
+#: .\codeguru\templates\new_center.html:9
 msgid "Note: Ticker must be 3 chars long."
 msgstr "שים לב: סמל המרכז חייב להיות באורך 3 אותיות."
 
-#: codeguru/templates/new_center.html:13
+#: .\codeguru\templates\new_center.html:13
 msgid "Create New Center"
 msgstr "צור מרכז חדש"
 
-#: codeguru/templates/profile.html:7
+#: .\codeguru\templates\profile.html:7
 msgid "Your score is"
 msgstr "הניקוד שלך הוא"
 
-#: codeguru/templates/profile.html:11
+#: .\codeguru\templates\profile.html:11
 msgid "Delete Profile"
 msgstr "מחק פרופיל"
 
-#: codeguru/templates/profile.html:15
+#: .\codeguru\templates\profile.html:15
 msgid "Your group is"
 msgstr "הקבוצה שלך היא"
 
-#: codeguru/templates/profile.html:17
+#: .\codeguru\templates\profile.html:17
 msgid "Create a group"
 msgstr "צור קבוצה"
 
-#: codeguru/templates/registration/activate.html:6
+#: .\codeguru\templates\registration\activate.html:6
 msgid "Account activation failed"
 msgstr "הפעלת החשבון נכשלה"
 
-#: codeguru/templates/registration/activation_complete.html:5
+#: .\codeguru\templates\registration\activation_complete.html:5
 msgid "Your account is now activated."
 msgstr "החשבון שלך הופעל."
 
-#: codeguru/templates/registration/activation_email.txt:2
+#: .\codeguru\templates\registration\activation_email.txt:2
 msgid "Activate account at"
 msgstr " הפעל חשבון ב"
 
-#: codeguru/templates/registration/activation_email.txt:6
+#: .\codeguru\templates\registration\activation_email.txt:6
 #, python-format
 msgid "Link is valid for %(expiration_days)s days."
 msgstr "תוקף הקישור הוא %(expiration_days)s ימים."
 
-#: codeguru/templates/registration/activation_email_subject.txt:1
+#: .\codeguru\templates\registration\activation_email_subject.txt:1
 msgid "Account activation on"
 msgstr "החשבון פעיל"
 
-#: codeguru/templates/registration/logged_out.html:7
+#: .\codeguru\templates\registration\logged_out.html:7
 msgid "Logged out."
 msgstr "התנתקת בהצלחה."
 
-#: codeguru/templates/registration/login.html:13
+#: .\codeguru\templates\registration\login.html:13
 msgid "Forgot password"
 msgstr "שכחת סיסמה"
 
-#: codeguru/templates/registration/login.html:13
+#: .\codeguru\templates\registration\login.html:13
 msgid "Reset it"
 msgstr "שחזר סיסמה"
 
-#: codeguru/templates/registration/login.html:14
+#: .\codeguru\templates\registration\login.html:14
 msgid "Not member"
 msgstr "לא משתמש"
 
-#: codeguru/templates/registration/login.html:14
-#: codeguru/templates/registration/register.html:6
-#: codeguru/templates/registration/register.html:10
+#: .\codeguru\templates\registration\login.html:14
+#: .\codeguru\templates\registration\register.html:6
+#: .\codeguru\templates\registration\register.html:10
 msgid "Register"
 msgstr "הירשם"
 
-#: codeguru/templates/registration/password_change_done.html:5
+#: .\codeguru\templates\registration\password_change_done.html:5
 msgid "Password changed"
 msgstr "סיסמה שונתה"
 
-#: codeguru/templates/registration/password_change_form.html:9
-#: codeguru/templates/registration/password_reset_confirm.html:12
-#: codeguru/templates/registration/password_reset_form.html:9
-#: codeguru/templates/registration/registration_form.html:9
+#: .\codeguru\templates\registration\password_change_form.html:9
+#: .\codeguru\templates\registration\password_reset_confirm.html:12
+#: .\codeguru\templates\registration\password_reset_form.html:9
+#: .\codeguru\templates\registration\registration_form.html:9
 msgid "Submit"
 msgstr "שלח"
 
-#: codeguru/templates/registration/password_reset_complete.html:6
+#: .\codeguru\templates\registration\password_reset_complete.html:6
 msgid "Password reset successfully"
 msgstr "סיסמה שוחזרה בהצלחה"
 
-#: codeguru/templates/registration/password_reset_confirm.html:17
+#: .\codeguru\templates\registration\password_reset_confirm.html:17
 msgid "Password reset failed"
 msgstr "שחזור הסיסמה נכשל"
 
-#: codeguru/templates/registration/password_reset_done.html:5
+#: .\codeguru\templates\registration\password_reset_done.html:5
 msgid "Email with password reset instructions has been sent."
 msgstr "נשלח מייל עם הוראות לשחזור הסיסמה"
 
-#: codeguru/templates/registration/password_reset_email.html:2
+#: .\codeguru\templates\registration\password_reset_email.html:2
 #, python-format
 msgid "Reset password at %(site_name)s"
 msgstr "שחזר סיסמה ב-%(site_name)s"
 
-#: codeguru/templates/registration/password_reset_subject.txt:3
+#: .\codeguru\templates\registration\password_reset_subject.txt:3
 #, python-format
 msgid "Password reset on %(site_name)s"
 msgstr "שחזר סיסמה ב-%(site_name)s"
 
-#: codeguru/templates/registration/register.html:12
+#: .\codeguru\templates\registration\register.html:12
 msgid "If you already have an account,"
 msgstr "אם יש לך חשבון,"
 
-#: codeguru/templates/registration/register.html:12
+#: .\codeguru\templates\registration\register.html:12
 msgid "login"
 msgstr "התחבר"
 
-#: codeguru/templates/registration/register.html:12
+#: .\codeguru\templates\registration\register.html:12
 msgid "instead."
 msgstr "במקום"
 
-#: codeguru/templates/registration/registration_closed.html:5
+#: .\codeguru\templates\registration\registration_closed.html:5
 msgid "Registration is currently closed."
 msgstr "הרשמה כרגע סגורה"
 
-#: codeguru/templates/registration/registration_complete.html:5
+#: .\codeguru\templates\registration\registration_complete.html:5
 msgid "You are now registered. Activation email sent."
 msgstr "נרשמת בהצלחה. נשלח מייל להפעלה."
 
-#: codeguru/views.py:40
+#: .\codeguru\views.py:40
 msgid "Group already exists. try choosing another name."
 msgstr "שם הקבוצה תפוס. יש לבחור שם אחר."
 
-#: codeguru/views.py:87
+#: .\codeguru\views.py:87
 msgid "Center {} already exists."
 msgstr "המרכז {} כבר קיים."
 
-#: codeguru/views.py:114
+#: .\codeguru\views.py:114
 msgid "You must leave your group first."
 msgstr "עליך לעזוב את הקבוצה שלך תחילה."
 
-#: codeguru/views.py:118
+#: .\codeguru\views.py:118
 msgid "Invite expired."
 msgstr "תוקף ההזמנה פג."
 
-#: codeguru/views.py:125
+#: .\codeguru\views.py:120
+msgid "Sorry groups must be 3 members max."
+msgstr ""
+
+#: .\codeguru\views.py:127
 msgid "Invalid Invite link."
 msgstr "קישור הקבוצה לא תקין."
 
-#: codeguru/views.py:131
+#: .\codeguru\views.py:133
 msgid "You do not have a group."
 msgstr "אינך משוייך לאף קבוצה."
 
-#: codeguru/views.py:133
+#: .\codeguru\views.py:135
 msgid "Only an owner can create a group invite."
 msgstr "רק מייסד קבוצה יכול ליצור הזמנה."
 
-#: war/forms.py:12
+#: .\war\forms.py:12
 msgid "Assembly source file: "
 msgstr "קוד מקור (קובץ אסמבלי): "
 
-#: war/forms.py:15
+#: .\war\forms.py:15
 msgid "Binary file: "
 msgstr "קובץ מקומפל (קובץ בינארי): "
 
-#: war/templates/challenges/challenge_base.html:7
+#: .\war\templates\challenges\challenge_base.html:11
 msgid "Description"
 msgstr "תיאור"
 
-#: war/templates/challenges/challenge_base.html:8
+#: .\war\templates\challenges\challenge_base.html:14
 msgid "Status"
 msgstr "מצב: "
 
-#: war/templates/challenges/challenge_base.html:8
-#: war/templates/challenges/challenges.html:16
+#: .\war\templates\challenges\challenge_base.html:14
+#: .\war\templates\challenges\challenges.html:16
 msgid "Active"
 msgstr "פעיל"
 
-#: war/templates/challenges/challenge_base.html:8
-#: war/templates/challenges/challenges.html:16
+#: .\war\templates\challenges\challenge_base.html:14
+#: .\war\templates\challenges\challenges.html:16
 msgid "Inactive"
 msgstr "לא פעיל"
 
-#: war/templates/challenges/challenge_base.html:16
+#: .\war\templates\challenges\challenge_base.html:22
 msgid "You must have a group to participate in a challenge."
 msgstr "עליך להיות משוייך לקבוצה על מנת להשתתף באתגרים."
 
-#: war/templates/challenges/challenge_base.html:20
+#: .\war\templates\challenges\challenge_base.html:26
 msgid "Challenge ended!"
 msgstr "האתגר הסתיים!"
 
-#: war/templates/challenges/challenges.html:5
+#: .\war\templates\challenges\challenge_base.html:32
+msgid "required riddles to unlock this one are:"
+msgstr ""
+
+#: .\war\templates\challenges\challenges.html:5
 msgid "Active Challenges"
 msgstr "אתגרים"
 
-#: war/templates/challenges/riddles/riddle_page.html:10
+#: .\war\templates\challenges\challenges.html:19
+#, fuzzy
+#| msgid "Challenges"
+msgid "No challenges yet."
+msgstr "אתגרים"
+
+#: .\war\templates\challenges\riddles\riddle_page.html:10
 msgid "Please upload .zip file"
 msgstr "נא להעלות קובץ zip."
 
-#: war/templates/challenges/riddles/riddle_page.html:13
-#: war/templates/challenges/wars/war_page.html:8
-msgid "Last update to survivors was"
+#: .\war\templates\challenges\riddles\riddle_page.html:13
+#, fuzzy
+#| msgid "Last update to survivors was"
+msgid "Last update to solution was"
 msgstr "העדכון האחרון היה לפני "
 
-#: war/templates/challenges/riddles/riddle_page.html:13
-#: war/templates/challenges/wars/war_page.html:8
+#: .\war\templates\challenges\riddles\riddle_page.html:13
+#: .\war\templates\challenges\wars\war_page.html:8
 msgid "ago"
 msgstr " "
 
-#: war/templates/challenges/riddles/riddle_page.html:20
-#: war/templates/challenges/wars/war_page.html:26
-msgid "Upload"
-msgstr "שלח"
-
-#: war/templates/challenges/wars/war_page.html:15
-msgid "Survivor"
-msgstr "שורד"
-
-#: war/templates/challenges/wars/war_page.html:20
+#: .\war\templates\challenges\riddles\riddle_page.html:14
+#: .\war\templates\challenges\wars\war_page.html:20
 msgid "Download"
 msgstr "הורדה"
 
-#: war/views.py:28
+#: .\war\templates\challenges\riddles\riddle_page.html:21
+#: .\war\templates\challenges\wars\war_page.html:26
+msgid "Upload"
+msgstr "שלח"
+
+#: .\war\templates\challenges\riddles\riddle_page.html:27
+msgid "Only group owner can upload solutions."
+msgstr ""
+
+#: .\war\templates\challenges\wars\war_page.html:8
+msgid "Last update to survivors was"
+msgstr "העדכון האחרון היה לפני "
+
+#: .\war\templates\challenges\wars\war_page.html:15
+msgid "Survivor"
+msgstr "שורד"
+
+#: .\war\views.py:33
 msgid "Riddle not found"
 msgstr "החידה לא נמצאה."
 
-#: war/views.py:74
+#: .\war\views.py:112
 msgid "Upload failed. This challenge is inactive."
 msgstr "העלאה נכשלה. החידה לא פעילה."
 
-#: war/views.py:87
+#: .\war\views.py:128
 msgid "War not found"
 msgstr "אתגר המלחמה לא נמצא."
 
@@ -407,7 +432,7 @@ msgstr "אתגר המלחמה לא נמצא."
 #~ "Note: Center name should be presented using 3 CAPITAL letters in English."
 #~ msgstr "שים לב: שם המרכז חייב להיות מורכב מ-3 אותיות גדולות באנגלית."
 
-#~ msgid "Codeguru Extreme"
+#~ msgid "Codeguru Xtreme"
 #~ msgstr "קודגורו אקסטרים"
 
 #~ msgid "This invite will be valid for the next 48 hours."
