@@ -27,7 +27,7 @@ class Challenge(models.Model):
 
     @property
     def active(self):
-        return self.end_date > timezone.now() > self.start_date
+        return self.start_date <= timezone.now() <= self.end_date
 
     def get_my_model_name(self):
         return self._meta.model_name
