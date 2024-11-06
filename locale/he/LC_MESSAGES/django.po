@@ -183,7 +183,7 @@ msgstr "צור קבוצה:"
 
 #: .\codeguru\templates\new_center.html:9
 msgid "Note: Ticker must be 3 chars long."
-msgstr "שים לב: סמל המרכז חייב להיות באורך 3 אותיות."
+msgstr "שים לב: סמל המרכז חייב להיות 3 אותיות באנגלית."
 
 #: .\codeguru\templates\new_center.html:13
 msgid "Create New Center"
