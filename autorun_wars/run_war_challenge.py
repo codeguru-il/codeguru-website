@@ -1,12 +1,10 @@
 import argparse
-import os
-import subprocess
 import logging
+import os
 import sqlite3
-
-from typing import List, Tuple, Dict
-from typing import List
+import subprocess
 from os import listdir
+from typing import Dict, List, Tuple
 
 from website.settings import DATABASES
 

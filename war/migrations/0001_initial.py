@@ -3,8 +3,9 @@
 import django.core.files.storage
 import django.core.validators
 import django.db.models.deletion
-import war.models
 from django.db import migrations, models
+
+import war.models
 
 
 class Migration(migrations.Migration):

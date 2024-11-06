@@ -1,4 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
+
 from codeguru.models import Profile, User
 
 USER_ARGS = [f.name for f in User._meta.get_fields()]

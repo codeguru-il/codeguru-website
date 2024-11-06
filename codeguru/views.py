@@ -1,16 +1,17 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login
-from .forms import NewUserForm, NewGroupForm, NewCenterForm
-from .models import Profile, Invite, CgGroup, User, Center, Message
-from django.contrib.auth.decorators import login_required
-from django.utils.crypto import get_random_string
-from django.utils import translation
-from django.http import HttpResponse
-from django.utils.translation import gettext
 from django.conf import settings
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ValidationError
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.utils import translation
+from django.utils.crypto import get_random_string
+from django.utils.translation import gettext
+
 from website.settings import CAN_REGISTER
-from django.contrib import messages
+
+from .forms import NewCenterForm, NewGroupForm, NewUserForm
+from .models import Center, CgGroup, Invite, Message, Profile, User
 
 
 def error(request, msg):

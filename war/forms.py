@@ -1,6 +1,7 @@
 from django import forms
-from .models import Riddle, Survivor, RiddleSolution, War, asm_max, bin_max, survivor_signature
 from django.utils.translation import gettext_lazy as _
+
+from .models import RiddleSolution, asm_max, bin_max, survivor_signature
 
 
 class SurvivorSubmissionForm(forms.Form):

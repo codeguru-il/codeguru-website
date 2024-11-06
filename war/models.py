@@ -1,15 +1,17 @@
 from __future__ import annotations
-from django.utils import timezone
-from django.db import models
-from django.core.validators import FileExtensionValidator, MinValueValidator
-from django.core.exceptions import ValidationError
-from codeguru.models import CgGroup
-from os.path import join, splitext
-from django.utils.crypto import get_random_string
-from django.core.files.storage import FileSystemStorage
-from django.conf import settings
+
+from os.path import join
 from uuid import uuid4
+
+from django.conf import settings
+from django.core.exceptions import ValidationError
+from django.core.files.storage import FileSystemStorage
+from django.core.validators import FileExtensionValidator, MinValueValidator
+from django.db import models
 from django.db.models.signals import pre_init
+from django.utils import timezone
+
+from codeguru.models import CgGroup
 
 warrior_storage = FileSystemStorage(location=settings.PRIVATE_STORAGE_ROOT)
 

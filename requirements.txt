@@ -8,3 +8,4 @@ whitenoise==6.7.0
 pandas==2.2.3
 
 black
+isort

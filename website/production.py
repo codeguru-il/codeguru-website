@@ -1,8 +1,5 @@
-import os
-
 from .settings import *
 from .settings import BASE_DIR
-
 
 ALLOWED_HOSTS = [os.getenv("WEBSITE_HOSTNAME")] if "WEBSITE_HOSTNAME" in os.environ else []
 CSRF_TRUSTED_ORIGINS = [f"https://{hostname}" for hostname in ALLOWED_HOSTS]

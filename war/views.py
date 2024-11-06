@@ -1,14 +1,16 @@
-from django.shortcuts import render
-from .models import RiddleSolution, War, Challenge, Riddle, Survivor, warrior_storage, format_path
-from itertools import chain
-from codeguru.views import error
-from codeguru.models import CgGroup
-from django.contrib.auth.decorators import login_required
-from .forms import SurvivorSubmissionForm, RiddleSubmissionForm
-from django.http import FileResponse, HttpResponseNotFound
-from os.path import join
 import re
+from itertools import chain
+from os.path import join
+
+from django.contrib.auth.decorators import login_required
+from django.http import FileResponse, HttpResponseNotFound
+from django.shortcuts import render
 from django.utils.translation import gettext
+
+from codeguru.views import error
+
+from .forms import RiddleSubmissionForm, SurvivorSubmissionForm
+from .models import Riddle, RiddleSolution, Survivor, War, format_path, warrior_storage
 
 
 def challenges(request):

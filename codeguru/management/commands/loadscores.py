@@ -1,8 +1,9 @@
-from email.policy import default
-from django.core.management.base import BaseCommand, CommandError
-from codeguru.models import Profile, User, CgGroup
-import pandas as pd
 import os
+
+import pandas as pd
+from django.core.management.base import BaseCommand, CommandError
+
+from codeguru.models import CgGroup, Profile
 
 
 class Command(BaseCommand):
