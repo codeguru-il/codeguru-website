@@ -32,11 +32,10 @@ class Competition(models.Model):
     Examples: CGX 2024, CGX 2024 Young, CGX 2024.5
     """
 
-    name_en = models.CharField(max_length=50, unique=True)
-    name_he = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return self.name_en
+        return self.name
 
 
 class Center(models.Model):
