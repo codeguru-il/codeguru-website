@@ -5,6 +5,7 @@ from .models import CgGroup, Center, Profile
 from django.utils.translation import gettext_lazy as _
 from django.core.exceptions import ValidationError
 
+
 class NewUserForm(UserCreationForm):
     email = forms.EmailField(required=True, label=_("Email"))
     first_name = forms.CharField(required=True, label=_("First Name"))
@@ -17,7 +18,7 @@ class NewUserForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super(NewUserForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
+        user.email = self.cleaned_data["email"]
 
         if User.objects.filter(email=user.email).exists():
             raise ValidationError("Email already exists")
@@ -25,21 +26,23 @@ class NewUserForm(UserCreationForm):
         if commit:
             user.save()
 
-            p = Profile(user=user, phone=self.cleaned_data['phone'])
+            p = Profile(user=user, phone=self.cleaned_data["phone"])
             p.save()
-            
+
         return user
 
+
 class NewCenterForm(forms.ModelForm):
-    name = forms.CharField(max_length=50,required=True, label=_("Name"))
+    name = forms.CharField(max_length=50, required=True, label=_("Name"))
     ticker = forms.CharField(max_length=3, min_length=3, required=True, label=_("Ticker"))
 
     def __init__(self, *args, **kwargs):
         super(NewCenterForm, self).__init__(*args, **kwargs)
-    
+
     class Meta:
         model = Center
-        fields = ('name', 'ticker')
+        fields = ("name", "ticker")
+
 
 class NewGroupForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -48,4 +51,4 @@ class NewGroupForm(forms.ModelForm):
 
     class Meta:
         model = CgGroup
-        fields = ('name', 'center')
+        fields = ("name", "center")

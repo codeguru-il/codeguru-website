@@ -8,22 +8,26 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+
 def validate_center(value):
     if len(value) == 3 and value.isalpha() and value.isascii():
         return value
     raise ValidationError("Center should be represented with 3 letters in english.")
 
+
 def validate_length(number, length=10):
     if len(str(number)) != length:
-        raise ValidationError(u'%s is not the correct length' % number)
+        raise ValidationError("%s is not the correct length" % number)
 
 
 INVITE_TIMEOUT = 48
 
+
 def group_name_validator(name):
-    if not name.replace('_', '').isalnum():
+    if not name.replace("_", "").isalnum():
         raise ValidationError("Only alphanumeric characters and underscores are allowed in group name.")
     return name
+
 
 class Center(models.Model):
     name = models.CharField(max_length=50)
@@ -36,9 +40,9 @@ class Center(models.Model):
         self.ticker = self.ticker.upper()
         return super(Center, self).save(*args, **kwargs)
 
+
 class CgGroup(models.Model):
-    name = models.CharField(max_length=30, unique=True,
-                            validators=[group_name_validator], verbose_name=_("Name"))
+    name = models.CharField(max_length=30, unique=True, validators=[group_name_validator], verbose_name=_("Name"))
     # acronym = models.CharField(max_length=3, validators=[validate_length], unique=True)
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, null=True, on_delete=models.CASCADE)
@@ -46,10 +50,10 @@ class CgGroup(models.Model):
     def __str__(self):
         return f"{self.center.ticker}_{self.name}"
 
+
 class Invite(models.Model):
     group = models.OneToOneField(CgGroup, on_delete=models.CASCADE)
-    code = models.CharField(max_length=64, unique=True,
-                            default=get_random_string(64))
+    code = models.CharField(max_length=64, unique=True, default=get_random_string(64))
     created = models.DateTimeField(auto_now_add=True)
 
     @property
@@ -59,6 +63,7 @@ class Invite(models.Model):
     def __str__(self):
         return f"Invite to join {self.group}"
 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     group = models.ForeignKey(CgGroup, null=True, on_delete=models.SET_NULL)
@@ -67,6 +72,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return f"Profile of {self.user.username}"
+
 
 class Message(models.Model):
     title_he = models.CharField(max_length=255)

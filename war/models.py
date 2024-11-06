@@ -33,10 +33,12 @@ class Challenge(models.Model):
         return self._meta.model_name
 
     def __str__(self):
-        return self.start_date.strftime("%Y-%m-%d")+":"+self.end_date.strftime("%Y-%m-%d")+"_"+self.title
+        return self.start_date.strftime("%Y-%m-%d") + ":" + self.end_date.strftime("%Y-%m-%d") + "_" + self.title
+
 
 def format_path(instance, file_idx, bin):
     return f"{instance.group.center.ticker}_{instance.group.name}{file_idx}" + ("" if bin else ".asm")
+
 
 def war_directory_path(instance, bin):
     if instance.group is None:
@@ -49,7 +51,7 @@ def war_directory_path(instance, bin):
 
 def riddle_directory_path(instance, filename):
     return join("riddles", str(instance.riddle.id), str(instance.group.id), "solution.zip")
-    
+
 
 def bin_max(value):
     filesize = value.size
@@ -64,10 +66,10 @@ def survivor_signature(value):
     if bytes:
         for i, byte in enumerate(bytes):
             if i % 49 == 0 and not byte == 0x90:
-                raise ValidationError('Invalid signature.')
+                raise ValidationError("Invalid signature.")
         return value
     else:
-        raise ValidationError('Invalid signature.')
+        raise ValidationError("Invalid signature.")
 
 
 def asm_max(value):
@@ -78,27 +80,29 @@ def asm_max(value):
         return value
 
 
-def asm_surv_upload(instance, _): return war_directory_path(instance, False)
-def bin_surv_upload(instance, _): return war_directory_path(instance, True)
+def asm_surv_upload(instance, _):
+    return war_directory_path(instance, False)
+
+
+def bin_surv_upload(instance, _):
+    return war_directory_path(instance, True)
+
 
 class Riddle(Challenge):
     pass
 
+
 class War(Challenge):
-    amount_of_survivors = models.PositiveIntegerField(
-        default=2, validators=[MinValueValidator(1)])
+    amount_of_survivors = models.PositiveIntegerField(default=2, validators=[MinValueValidator(1)])
     zombie_mode = models.BooleanField(default=False)
-    required_wars = models.ManyToManyField('self', symmetrical=False, blank=True)
+    required_wars = models.ManyToManyField("self", symmetrical=False, blank=True)
 
 
 class Survivor(models.Model):
-    group = models.ForeignKey(
-        CgGroup, null=True, editable=False, on_delete=models.CASCADE)
+    group = models.ForeignKey(CgGroup, null=True, editable=False, on_delete=models.CASCADE)
     war = models.ForeignKey(War, null=True, on_delete=models.CASCADE)
-    asm_file = models.FileField(null=True, upload_to=asm_surv_upload, validators=[
-                                asm_max], storage=warrior_storage)
-    bin_file = models.FileField(upload_to=bin_surv_upload, validators=[
-                                bin_max], storage=warrior_storage)
+    asm_file = models.FileField(null=True, upload_to=asm_surv_upload, validators=[asm_max], storage=warrior_storage)
+    bin_file = models.FileField(upload_to=bin_surv_upload, validators=[bin_max], storage=warrior_storage)
     result = models.PositiveIntegerField(default=0)
     upload_date = models.DateTimeField(auto_now_add=True)
 
@@ -107,16 +111,19 @@ class Survivor(models.Model):
 
 
 def warrior_file_idx_modifier(sender, **kwargs):
-    if kwargs.get('kwargs').get('warrior_file_idx'):
-        sender.warrior_file_idx = kwargs.get('kwargs').pop('warrior_file_idx')
+    if kwargs.get("kwargs").get("warrior_file_idx"):
+        sender.warrior_file_idx = kwargs.get("kwargs").pop("warrior_file_idx")
 
 
 pre_init.connect(warrior_file_idx_modifier, Survivor)
+
 
 class RiddleSolution(models.Model):
     riddle = models.ForeignKey(Riddle, on_delete=models.CASCADE)
     group = models.ForeignKey(CgGroup, null=True, on_delete=models.CASCADE)
     riddle_solution = models.FileField(
-        upload_to=riddle_directory_path, storage=warrior_storage, 
-        validators=[FileExtensionValidator(allowed_extensions=['zip'])])
+        upload_to=riddle_directory_path,
+        storage=warrior_storage,
+        validators=[FileExtensionValidator(allowed_extensions=["zip"])],
+    )
     upload_date = models.DateTimeField(auto_now_add=True)
