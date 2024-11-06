@@ -55,7 +55,7 @@ class CgGroup(models.Model):
     # acronym = models.CharField(max_length=3, validators=[validate_length], unique=True)
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, null=True, on_delete=models.CASCADE)
-    competition = models.ForeignKey(Competition, null=True, on_delete=models.SET_NULL)
+    competition = models.ForeignKey(Competition, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"{self.center.ticker}_{self.name}"

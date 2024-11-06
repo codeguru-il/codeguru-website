@@ -16,7 +16,7 @@ from codeguru.models import CgGroup, Competition
 class Challenge(models.Model):
     title = models.CharField(max_length=100, unique=True)
     description = models.TextField()
-    competition = models.ForeignKey(Competition, on_delete=models.CASCADE, null=True)
+    competition = models.ForeignKey(Competition, on_delete=models.CASCADE, null=True, blank=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 

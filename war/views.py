@@ -8,18 +8,29 @@ from django.http import FileResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.utils.translation import gettext
 
+from codeguru.models import CgGroup
 from codeguru.views import error
 
 from .forms import RiddleSubmissionForm, SurvivorSubmissionForm
-from .models import Riddle, RiddleSolution, Survivor, War, format_path
+from .models import Riddle, RiddleSolution, Survivor, War, format_path, Challenge
 
 
+@login_required
 def challenges(request):
-    wars = War.objects.all()
-    riddles = Riddle.objects.all()
-    challenges = sorted(chain(wars, riddles), key=lambda x: x.end_date)
+    user = request.user
 
-    return render(request, "challenges/challenges.html", {"challenges": challenges})
+    available_challenges: list[Challenge] = []
+
+    if user.profile.group and user.profile.group.competition:
+        available_challenges.extend(War.objects.filter(competition=user.profile.group.competition).all())
+        available_challenges.extend(Riddle.objects.filter(competition=user.profile.group.competition).all())
+
+    available_challenges.extend(War.objects.filter(competition=None).all())
+    available_challenges.extend(Riddle.objects.filter(competition=None).all())
+
+    available_challenges.sort(key=lambda x: x.end_date)
+
+    return render(request, "challenges/challenges.html", {"challenges": available_challenges})
 
 
 def check_requirements(group, challenge, solution_model, field="required_riddles"):
@@ -31,6 +42,13 @@ def check_requirements(group, challenge, solution_model, field="required_riddles
     return required, is_solved_requirements
 
 
+def is_group_allowed_for_challenge(challenge: Challenge, group: CgGroup | None) -> bool:
+    if challenge.competition == None:
+        return True
+
+    return group and group.competition == challenge.competition
+
+
 @login_required
 def riddle_page(request, id):
     form = RiddleSubmissionForm()
@@ -38,6 +56,9 @@ def riddle_page(request, id):
         group = request.user.profile.group
         riddle = Riddle.objects.get(id=id)
     except Riddle.DoesNotExist:
+        return error(request, gettext("Riddle not found"))
+
+    if not is_group_allowed_for_challenge(riddle, group):
         return error(request, gettext("Riddle not found"))
 
     current_solution = None
@@ -108,6 +129,10 @@ def war_page(request, id):
         war = War.objects.get(id=id)
         form = SurvivorSubmissionForm(war=war)
         group = request.user.profile.group
+
+        if not is_group_allowed_for_challenge(war, group):
+            return error(request, gettext("War not found"))
+
         prev_surv = Survivor.objects.filter(group=group, war=war)
 
         required_riddles, is_solved_riddles = check_requirements(group, war, RiddleSolution)
