@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('codeguru', '0004_alter_invite_code'),
+        ('codeguru', '0003_alter_cggroup_competition_alter_invite_code'),
     ]
 
     operations = [
