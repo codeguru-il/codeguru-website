@@ -3,22 +3,20 @@ from __future__ import annotations
 from os.path import join
 from uuid import uuid4
 
-from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.files.storage import FileSystemStorage
+from django.core.files.storage import default_storage
 from django.core.validators import FileExtensionValidator, MinValueValidator
 from django.db import models
 from django.db.models.signals import pre_init
 from django.utils import timezone
 
-from codeguru.models import CgGroup
-
-warrior_storage = FileSystemStorage(location=settings.PRIVATE_STORAGE_ROOT)
+from codeguru.models import CgGroup, Competition
 
 
 class Challenge(models.Model):
     title = models.CharField(max_length=100, unique=True)
     description = models.TextField()
+    competition = models.ForeignKey(Competition, on_delete=models.CASCADE, null=True, blank=True)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
 
@@ -29,17 +27,22 @@ class Challenge(models.Model):
 
     @property
     def active(self):
-        return self.end_date > timezone.now() > self.start_date
+        return self.start_date <= timezone.now() <= self.end_date
 
     def get_my_model_name(self):
         return self._meta.model_name
 
     def __str__(self):
-        return self.start_date.strftime("%Y-%m-%d") + ":" + self.end_date.strftime("%Y-%m-%d") + "_" + self.title
+        return "[{competition}] {start}~{end}: {title}".format(
+            competition=self.competition,
+            start=self.start_date.strftime("%Y-%m-%d"),
+            end=self.end_date.strftime("%Y-%m-%d"),
+            title=self.title,
+        )
 
 
-def format_path(instance, file_idx, bin):
-    return f"{instance.group.center.ticker}_{instance.group.name}{file_idx}" + ("" if bin else ".asm")
+def format_path(instance, file_idx, binary):
+    return f"{instance.group.center.ticker}_{instance.group.name}{file_idx}" + ("" if binary else ".asm")
 
 
 def war_directory_path(instance, bin):
@@ -103,8 +106,8 @@ class War(Challenge):
 class Survivor(models.Model):
     group = models.ForeignKey(CgGroup, null=True, editable=False, on_delete=models.CASCADE)
     war = models.ForeignKey(War, null=True, on_delete=models.CASCADE)
-    asm_file = models.FileField(null=True, upload_to=asm_surv_upload, validators=[asm_max], storage=warrior_storage)
-    bin_file = models.FileField(upload_to=bin_surv_upload, validators=[bin_max], storage=warrior_storage)
+    asm_file = models.FileField(null=True, upload_to=asm_surv_upload, validators=[asm_max], storage=default_storage)
+    bin_file = models.FileField(upload_to=bin_surv_upload, validators=[bin_max], storage=default_storage)
     result = models.PositiveIntegerField(default=0)
     upload_date = models.DateTimeField(auto_now_add=True)
 
@@ -125,7 +128,7 @@ class RiddleSolution(models.Model):
     group = models.ForeignKey(CgGroup, null=True, on_delete=models.CASCADE)
     riddle_solution = models.FileField(
         upload_to=riddle_directory_path,
-        storage=warrior_storage,
+        storage=default_storage,
         validators=[FileExtensionValidator(allowed_extensions=["zip"])],
     )
     upload_date = models.DateTimeField(auto_now_add=True)

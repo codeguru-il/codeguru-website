@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<b>{{ challenge.title }}</b> ( {{ challenge.start_date }} -> {{ challenge.end_date }} )
+<b>{{ challenge.title }}</b> ( {{ challenge.start_date|date:"Y-m-d H:i:s" }} -> {{ challenge.end_date|date:"Y-m-d H:i:s" }} )
 
 {% if solved_requirements %}
 

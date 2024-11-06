@@ -25,6 +25,19 @@ def group_name_validator(name):
     return name
 
 
+class Competition(models.Model):
+    """
+    A CodeGuru competition.
+
+    Examples: CGX 2024, CGX 2024 Young, CGX 2024.5
+    """
+
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Center(models.Model):
     name = models.CharField(max_length=50)
     ticker = models.CharField(max_length=3, unique=True)
@@ -42,6 +55,7 @@ class CgGroup(models.Model):
     # acronym = models.CharField(max_length=3, validators=[validate_length], unique=True)
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     center = models.ForeignKey(Center, null=True, on_delete=models.CASCADE)
+    competition = models.ForeignKey(Competition, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"{self.center.ticker}_{self.name}"

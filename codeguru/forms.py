@@ -52,4 +52,4 @@ class NewGroupForm(forms.ModelForm):
 
     class Meta:
         model = CgGroup
-        fields = ("name", "center")
+        fields = ("name", "center", "competition")

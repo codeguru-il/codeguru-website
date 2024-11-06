@@ -43,7 +43,10 @@ def group(request, id=None):
                     return error(request, gettext("Group already exists. try choosing another name."))
 
                 new_group = CgGroup(
-                    name=form.cleaned_data["name"], owner=request.user, center=form.cleaned_data["center"]
+                    name=form.cleaned_data["name"],
+                    owner=request.user,
+                    center=form.cleaned_data["center"],
+                    competition=form.cleaned_data["competition"],
                 )
                 new_group.save()
                 request.user.profile.group = new_group
@@ -53,13 +56,12 @@ def group(request, id=None):
 
         return render(request, "group.html", render_params)
 
-    current_group = CgGroup.objects.all().filter(id=id).first()
+    current_group: CgGroup = CgGroup.objects.all().filter(id=id).first()
     if not current_group:
         return error(request, "Group not found.")
 
     members = Profile.objects.all().filter(group=current_group)
 
-    link_expired = False
     try:
         link_expired = current_group.invite.expired
     except:

@@ -39,6 +39,10 @@
         text-decoration: underline;
         cursor: pointer;
     }
+    
+    small {
+        font-size: 80%;
+    }
 
 </style>
 
@@ -95,6 +99,9 @@
     {% block footer %}
         <hr/>
     {% endblock %}
+    {% if LANGUAGE_CODE == 'he' %}
+        <p><small>האתר תורגם לעברית בלשון 'אתה' אך מיועד לכלל המגדרים :)</small></p>
+    {% endif %}
 </div>
 </body>
 

@@ -130,6 +130,16 @@ MEDIA_URL = "/media/"  # Public URL at the browser
 
 PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, "data")
 
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": PRIVATE_STORAGE_ROOT,
+        },
+    },
+    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+}
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
