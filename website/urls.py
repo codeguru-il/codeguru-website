@@ -25,6 +25,7 @@ urlpatterns = [
     path("", include("codeguru.urls")),
     path("challenges/", include("war.urls")),
     path("admin/", admin.site.urls),
+    path("-/", include("django_alive.urls"))
 ]
 
 if len(sys.argv) >= 2 and sys.argv[1] == "runserver":
