@@ -1,3 +1,5 @@
+from azure.identity import DefaultAzureCredential
+
 from .settings import *
 from .settings import BASE_DIR
 
@@ -24,9 +26,19 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 STORAGES = {
     "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
         "OPTIONS": {
-            "location": PRIVATE_STORAGE_ROOT,
+            "token_credential": DefaultAzureCredential(),
+            "account_name": os.getenv("AZURE_STORAGE_ACCOUNT_NAME"),
+            "azure_container": "files",
+        },
+    },
+    "submissions": {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "token_credential": DefaultAzureCredential(),
+            "account_name": os.getenv("AZURE_STORAGE_ACCOUNT_NAME"),
+            "azure_container": "submissions",
         },
     },
     "staticfiles": {

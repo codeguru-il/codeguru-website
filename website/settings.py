@@ -128,16 +128,39 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"  # Public URL at the browser
 
-PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, "data")
+BASE_STORAGE_ROOT = os.path.join(BASE_DIR, "data")
 
+# TODO Remove test Azure storage containers
 STORAGES = {
-    "default": {
+    "default_": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
         "OPTIONS": {
-            "location": PRIVATE_STORAGE_ROOT,
+            "location": os.path.join(BASE_STORAGE_ROOT, "files"),
         },
     },
-    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    "default": {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "connection_string": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;",
+            "azure_container": "files",
+        },
+    },
+    "submissions_": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": os.path.join(BASE_STORAGE_ROOT, "submissions"),
+        },
+    },
+    "submissions": {
+        "BACKEND": "storages.backends.azure_storage.AzureStorage",
+        "OPTIONS": {
+            "connection_string": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;",
+            "azure_container": "submissions",
+        }
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
 }
 
 CACHES = {
