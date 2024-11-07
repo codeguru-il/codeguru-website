@@ -130,32 +130,17 @@ MEDIA_URL = "/media/"  # Public URL at the browser
 
 BASE_STORAGE_ROOT = os.path.join(BASE_DIR, "data")
 
-# TODO Remove test Azure storage containers
 STORAGES = {
-    "default_": {
+    "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
         "OPTIONS": {
             "location": os.path.join(BASE_STORAGE_ROOT, "files"),
         },
     },
-    "default": {
-        "BACKEND": "storages.backends.azure_storage.AzureStorage",
-        "OPTIONS": {
-            "connection_string": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;",
-            "azure_container": "files",
-        },
-    },
-    "submissions_": {
+    "submissions": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
         "OPTIONS": {
             "location": os.path.join(BASE_STORAGE_ROOT, "submissions"),
-        },
-    },
-    "submissions": {
-        "BACKEND": "storages.backends.azure_storage.AzureStorage",
-        "OPTIONS": {
-            "connection_string": "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://127.0.0.1:10000/devstoreaccount1;QueueEndpoint=http://127.0.0.1:10001/devstoreaccount1;TableEndpoint=http://127.0.0.1:10002/devstoreaccount1;",
-            "azure_container": "submissions",
         },
     },
     "staticfiles": {
@@ -194,5 +179,8 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
 SURVIVOR_SIGNATURE_ENABLED = True
 SURVIVOR_SIGNATURE_GAP = int(os.getenv("SURVIVOR_SIGNATURE_GAP", 49))
+"""
+The gap between signature bytes in the survivor. Default - 
+"""
 SURVIVOR_SIGNATURE_OFFSET = int(os.getenv("SURVIVOR_SIGNATURE_OFFSET", 0))
 SURVIVOR_SIGNATURE_VALUE = int(os.getenv("SURVIVOR_SIGNATURE_VALUE", "0x90"), 0)
