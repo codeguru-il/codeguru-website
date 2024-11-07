@@ -1,9 +1,6 @@
 import re
-from itertools import chain
-from os.path import join
 
 from django.contrib.auth.decorators import login_required
-from django.core.files.storage import default_storage
 from django.http import FileResponse, HttpResponseNotFound
 from django.shortcuts import render
 from django.utils.translation import gettext
@@ -12,7 +9,8 @@ from codeguru.models import CgGroup
 from codeguru.views import error
 
 from .forms import RiddleSubmissionForm, SurvivorSubmissionForm
-from .models import Riddle, RiddleSolution, Survivor, War, format_path, Challenge
+from .models import Challenge, Riddle, RiddleSolution, Survivor, War, format_survivor_name
+from .storage import get_survivor_path, submissions_storage
 
 
 @login_required
@@ -98,11 +96,14 @@ def download_war(request, id, fieldname):
         idx = fieldname.split("_")[-1]
 
         # folder_name = f"{group.center}_{group.name}"
-        file_name = format_path(request.user.profile, idx, bin)
+        file_name = format_survivor_name(request.user.profile, idx, bin)
 
-        path = join("wars", "submissions", str(id), "joined_submissions", file_name)
+        path = get_survivor_path(id, file_name)
 
-        response = FileResponse(default_storage().open(path, "rb"), content_type="application/force-download")
+        response = FileResponse(
+            submissions_storage().open(path, "rb"),
+            content_type="application/force-download",
+        )
         response["Content-Disposition"] = f'attachment; filename="{file_name}"'
         return response
     except Exception:

@@ -128,16 +128,24 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 MEDIA_URL = "/media/"  # Public URL at the browser
 
-PRIVATE_STORAGE_ROOT = os.path.join(BASE_DIR, "data")
+BASE_STORAGE_ROOT = os.path.join(BASE_DIR, "data")
 
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
         "OPTIONS": {
-            "location": PRIVATE_STORAGE_ROOT,
+            "location": os.path.join(BASE_STORAGE_ROOT, "files"),
         },
     },
-    "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
+    "submissions": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": os.path.join(BASE_STORAGE_ROOT, "submissions"),
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+    },
 }
 
 CACHES = {
@@ -168,3 +176,11 @@ else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
+
+SURVIVOR_SIGNATURE_ENABLED = True
+SURVIVOR_SIGNATURE_GAP = int(os.getenv("SURVIVOR_SIGNATURE_GAP", 49))
+"""
+The gap between signature bytes in the survivor. Default - 
+"""
+SURVIVOR_SIGNATURE_OFFSET = int(os.getenv("SURVIVOR_SIGNATURE_OFFSET", 0))
+SURVIVOR_SIGNATURE_VALUE = int(os.getenv("SURVIVOR_SIGNATURE_VALUE", "0x90"), 0)

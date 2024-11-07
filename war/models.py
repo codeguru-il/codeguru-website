@@ -4,13 +4,20 @@ from os.path import join
 from uuid import uuid4
 
 from django.core.exceptions import ValidationError
-from django.core.files.storage import default_storage
 from django.core.validators import FileExtensionValidator, MinValueValidator
 from django.db import models
+from django.db.models import CheckConstraint, Q
 from django.db.models.signals import pre_init
 from django.utils import timezone
 
 from codeguru.models import CgGroup, Competition
+from war.storage import get_survivor_path, submissions_storage
+from website.settings import (
+    SURVIVOR_SIGNATURE_ENABLED,
+    SURVIVOR_SIGNATURE_GAP,
+    SURVIVOR_SIGNATURE_OFFSET,
+    SURVIVOR_SIGNATURE_VALUE,
+)
 
 
 class Challenge(models.Model):
@@ -41,17 +48,16 @@ class Challenge(models.Model):
         )
 
 
-def format_path(instance, file_idx, binary):
-    return f"{instance.group.center.ticker}_{instance.group.name}{file_idx}" + ("" if binary else ".asm")
+def format_survivor_name(entry, survivor_index: int, is_binary: bool):
+    return f"{entry.group.center.ticker}_{entry.group.name}{survivor_index}" + ("" if is_binary else ".asm")
 
 
-def war_directory_path(instance, bin):
+def war_directory_path(instance, is_binary: bool) -> str:
     if instance.group is None:
         return join("wars", "zombies", str(instance.war.id), uuid4().hex)
-    idx = str(instance.warrior_file_idx)
-    name = format_path(instance, idx, bin)
+    name = format_survivor_name(instance, instance.warrior_file_idx, is_binary)
 
-    return join("wars", "submissions", str(instance.war.id), "joined_submissions", name)
+    return get_survivor_path(instance.war.id, name)
 
 
 def riddle_directory_path(instance, filename):
@@ -67,14 +73,16 @@ def bin_max(value):
 
 
 def survivor_signature(value):
-    bytes = value.file.read()
-    if bytes:
-        for i, byte in enumerate(bytes):
-            if i % 49 == 0 and not byte == 0x90:
+    machine_code = value.file.read()
+    if not machine_code:
+        raise ValidationError("Survivor may not be empty.")
+
+    if SURVIVOR_SIGNATURE_ENABLED:
+        for i, byte in enumerate(machine_code):
+            if i % SURVIVOR_SIGNATURE_GAP == SURVIVOR_SIGNATURE_OFFSET and not byte == SURVIVOR_SIGNATURE_VALUE:
                 raise ValidationError("Invalid signature.")
-        return value
-    else:
-        raise ValidationError("Invalid signature.")
+
+    return value
 
 
 def asm_max(value):
@@ -106,13 +114,13 @@ class War(Challenge):
 class Survivor(models.Model):
     group = models.ForeignKey(CgGroup, null=True, editable=False, on_delete=models.CASCADE)
     war = models.ForeignKey(War, null=True, on_delete=models.CASCADE)
-    asm_file = models.FileField(null=True, upload_to=asm_surv_upload, validators=[asm_max], storage=default_storage)
-    bin_file = models.FileField(upload_to=bin_surv_upload, validators=[bin_max], storage=default_storage)
-    result = models.PositiveIntegerField(default=0)
+    asm_file = models.FileField(null=True, upload_to=asm_surv_upload, validators=[asm_max], storage=submissions_storage)
+    bin_file = models.FileField(upload_to=bin_surv_upload, validators=[bin_max], storage=submissions_storage)
+    result = models.FloatField(default=0.0, validators=[MinValueValidator(0)])
     upload_date = models.DateTimeField(auto_now_add=True)
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+    class Meta:
+        constraints = [CheckConstraint(check=Q(result__gte=0.0), name="positive_result")]
 
 
 def warrior_file_idx_modifier(sender, **kwargs):
@@ -128,7 +136,7 @@ class RiddleSolution(models.Model):
     group = models.ForeignKey(CgGroup, null=True, on_delete=models.CASCADE)
     riddle_solution = models.FileField(
         upload_to=riddle_directory_path,
-        storage=default_storage,
+        storage=submissions_storage,
         validators=[FileExtensionValidator(allowed_extensions=["zip"])],
     )
     upload_date = models.DateTimeField(auto_now_add=True)
