@@ -3,7 +3,11 @@ from azure.identity import DefaultAzureCredential
 from .settings import *
 from .settings import BASE_DIR
 
-ALLOWED_HOSTS = [os.getenv("WEBSITE_HOSTNAME")] if "WEBSITE_HOSTNAME" in os.environ else []
+ALLOWED_HOSTS = (
+    [os.getenv("WEBSITE_HOSTNAME"), *os.getenv("CUSTOM_HOSTNAMES", "").split(" ")]
+    if "WEBSITE_HOSTNAME" in os.environ
+    else []
+)
 CSRF_TRUSTED_ORIGINS = [f"https://{hostname}" for hostname in ALLOWED_HOSTS]
 DEBUG = False
 
