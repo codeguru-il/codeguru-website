@@ -50,12 +50,12 @@ SESSION_COOKIE_SECURE = False
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.locale.LocaleMiddleware",
 ]
 
 ROOT_URLCONF = "website.urls"
@@ -184,3 +184,8 @@ The gap between signature bytes in the survivor. Default -
 """
 SURVIVOR_SIGNATURE_OFFSET = int(os.getenv("SURVIVOR_SIGNATURE_OFFSET", 0))
 SURVIVOR_SIGNATURE_VALUE = int(os.getenv("SURVIVOR_SIGNATURE_VALUE", "0x90"), 0)
+
+ALIVE_CHECKS = [
+    ("django_alive.checks.check_database", {}),
+    ("website.alive_checks.check_default_storage", {"filename": ".alive"}),
+]

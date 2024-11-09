@@ -172,13 +172,15 @@ def leave_group(request):
 
 
 def set_lang(request):
-    print(request.method)
     if request.method == "POST":
         language = request.POST.get("language", "en")
         if language not in ("en", "he"):
             return HttpResponse("Bad request", status=400)
+
         translation.activate(language)
-        response = redirect(request.POST["next"])
+
+        next_uri: str = request.POST["next"].removeprefix(f"/{request.LANGUAGE_CODE}")
+        response = redirect(next_uri)
         response.set_cookie(settings.LANGUAGE_COOKIE_NAME, language)
         return response
     return HttpResponse("Method Not Allowed", status=405)

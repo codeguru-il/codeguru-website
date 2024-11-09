@@ -17,13 +17,19 @@ Including another URLconf
 import sys
 
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-urlpatterns = [
+
+localized_urls = i18n_patterns(
     path("", include("codeguru.urls")),
     path("challenges/", include("war.urls")),
+)
+
+urlpatterns = [
+    *localized_urls,
     path("admin/", admin.site.urls),
     path("-/", include("django_alive.urls"))
 ]
