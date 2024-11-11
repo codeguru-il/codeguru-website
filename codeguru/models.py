@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
+import re
 
 
 def validate_center(value):
@@ -20,7 +21,8 @@ INVITE_TIMEOUT = 48
 
 
 def group_name_validator(name):
-    if not name.replace("_", "").isalnum():
+    expression = re.compile(R"^[a-zA-Z0-9_]+$")
+    if not expression.match(name):
         raise ValidationError("Only alphanumeric characters and underscores are allowed in group name.")
     return name
 
