@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from .models import RiddleSolution, SurvivorSignatureValidator, War, asm_max, bin_max
+from .models import RiddleSolution, SurvivorMachineCodeValidator, War, asm_max, bin_max
 
 
 class SurvivorSubmissionForm(forms.Form):
@@ -10,7 +10,7 @@ class SurvivorSubmissionForm(forms.Form):
         amount_of_survivors = war.amount_of_survivors
         super(SurvivorSubmissionForm, self).__init__(*args, **kwargs)
 
-        signature_validator = SurvivorSignatureValidator(competition=war.competition)
+        signature_validator = SurvivorMachineCodeValidator(competition=war.competition)
 
         for i in range(1, amount_of_survivors + 1):
             self.fields[f"asm_{i}"] = forms.FileField(label=_("Assembly source file: "), validators=[asm_max])
