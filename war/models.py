@@ -72,17 +72,26 @@ def bin_max(value):
         return value
 
 
-def survivor_signature(value):
-    machine_code = value.file.read()
-    if not machine_code:
-        raise ValidationError("Survivor may not be empty.")
+class SurvivorSignatureValidator:
+    def __init__(self, competition: Competition) -> None:
+        self.enabled = competition.survivor_signature_enabled
+        self.gap = competition.survivor_signature_gap
+        self.offset = competition.survivor_signature_offset
+        self.signature = competition.survivor_signature_value
 
-    if SURVIVOR_SIGNATURE_ENABLED:
+    def __call__(self, value):
+        machine_code = value.file.read()
+        if not machine_code:
+            raise ValidationError("Survivor may not be empty.")
+
+        if not self.enabled:
+            return value
+
         for i, byte in enumerate(machine_code):
-            if i % SURVIVOR_SIGNATURE_GAP == SURVIVOR_SIGNATURE_OFFSET and not byte == SURVIVOR_SIGNATURE_VALUE:
+            if i % self.gap == self.offset and not byte == self.signature:
                 raise ValidationError("Invalid signature.")
 
-    return value
+        return value
 
 
 def asm_max(value):

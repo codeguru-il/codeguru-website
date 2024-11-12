@@ -36,6 +36,10 @@ class Competition(models.Model):
     """
 
     name = models.CharField(max_length=50, unique=True)
+    survivor_signature_enabled = models.BooleanField(default=True)
+    survivor_signature_gap = models.PositiveIntegerField(default=49)
+    survivor_signature_offset = models.PositiveIntegerField(default=0)
+    survivor_signature_value = models.BinaryField(max_length=1, default=b"\x90")
 
     def __str__(self):
         return self.name
