@@ -177,14 +177,6 @@ else:
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
-SURVIVOR_SIGNATURE_ENABLED = True
-SURVIVOR_SIGNATURE_GAP = int(os.getenv("SURVIVOR_SIGNATURE_GAP", 49))
-"""
-The gap between signature bytes in the survivor. Default - 
-"""
-SURVIVOR_SIGNATURE_OFFSET = int(os.getenv("SURVIVOR_SIGNATURE_OFFSET", 0))
-SURVIVOR_SIGNATURE_VALUE = int(os.getenv("SURVIVOR_SIGNATURE_VALUE", "0x90"), 0)
-
 ALIVE_CHECKS = [
     ("django_alive.checks.check_database", {}),
     ("website.alive_checks.check_default_storage", {"filename": ".alive"}),

@@ -12,12 +12,6 @@ from django.utils import timezone
 
 from codeguru.models import CgGroup, Competition
 from war.storage import get_survivor_path, submissions_storage
-from website.settings import (
-    SURVIVOR_SIGNATURE_ENABLED,
-    SURVIVOR_SIGNATURE_GAP,
-    SURVIVOR_SIGNATURE_OFFSET,
-    SURVIVOR_SIGNATURE_VALUE,
-)
 
 
 class Challenge(models.Model):
