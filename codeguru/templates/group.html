@@ -13,9 +13,17 @@
         <p>{% trans "Group members" %}:</p>
         <ul>
         {% for member in members %}
-            <li>{{member.user.username}} 
-                {% if member.user == group.owner %}({% trans "Owner" %}){% endif %}
-                {% if member.user.profile == user.profile %}({% trans "You" %}){% endif %}
+            <li>{{member.username}} 
+                {% if member == group.owner %}({% trans "Owner" %}){% endif %}
+                {% if member.profile == user.profile %}({% trans "You" %}){% endif %}
+                <ul>
+                    <li>
+                        <p>{% trans "Email"%}: {{member.email}}</p>
+                    </li>
+                    <li>
+                        <p>{% trans "Phone Number"%}: {{member.profile.phone}}</p>
+                    </li>
+                </ul>
             </li>
         {% endfor %}
         </ul>
