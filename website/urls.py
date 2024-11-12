@@ -22,17 +22,12 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-
 localized_urls = i18n_patterns(
     path("", include("codeguru.urls")),
     path("challenges/", include("war.urls")),
 )
 
-urlpatterns = [
-    *localized_urls,
-    path("admin/", admin.site.urls),
-    path("-/", include("django_alive.urls"))
-]
+urlpatterns = [*localized_urls, path("admin/", admin.site.urls), path("-/", include("django_alive.urls"))]
 
 if len(sys.argv) >= 2 and sys.argv[1] == "runserver":
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(

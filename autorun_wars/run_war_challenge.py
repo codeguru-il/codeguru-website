@@ -13,8 +13,8 @@ logger = logging.getLogger(__name__)
 
 DATABASE_ADDRESS = DATABASES["default"]
 
-ENGINE_JAR = 'corewars8086-4.0.0-cli-support.jar'
-AUTO_COREWARS_CLASS = 'il.co.codeguru.corewars8086.AutoCoreWars'
+ENGINE_JAR = "corewars8086-4.0.0-cli-support.jar"
+AUTO_COREWARS_CLASS = "il.co.codeguru.corewars8086.AutoCoreWars"
 
 
 def parse_game_results(game_results: str) -> Dict[str, float]:
@@ -24,8 +24,8 @@ def parse_game_results(game_results: str) -> Dict[str, float]:
     @param game_results: The game results as the engine supplies them.
     @return: A dictionary containing the teams name and the result it scored.
     """
-    result_lines = game_results.decode('ascii').split('\n')
-    existing_result_lines = filter(lambda line: line != '', result_lines)
+    result_lines = game_results.decode("ascii").split("\n")
+    existing_result_lines = filter(lambda line: line != "", result_lines)
     team_to_total_score_tuples = map(log_and_parse_result_line, existing_result_lines)
     return {game_result[0]: game_result[1] for game_result in team_to_total_score_tuples}
 
@@ -50,7 +50,7 @@ def parse_result_line(result_line: str) -> Tuple[str, float]:
     @param result_line: The single line result representing the outcome of a game
     @return: The name of the team and the score as a tuple
     """
-    team_info_results = result_line.split(',')
+    team_info_results = result_line.split(",")
     if len(team_info_results) == 4:
         teamname, total_score, survivor1, survivor1_score = team_info_results
     elif len(team_info_results) == 6:
@@ -85,30 +85,29 @@ def get_survivor_name(survivordir):
         survivor1, survivor2 = survivors_in_dir
         return survivor1[:-1]
     else:
-        raise ValueError(
-            "Dir has {} survivors which is not supported".format(len(survivors_in_dir)))
+        raise ValueError("Dir has {} survivors which is not supported".format(len(survivors_in_dir)))
 
 
 def run_game(survivors_dirs: List[str], system_survivors_dir: str, num_wars: int):
-    if not os.path.exists('./survivors'):
-        os.mkdir('./survivors') # ./survivors dir must exist else the engine won't run
+    if not os.path.exists("./survivors"):
+        os.mkdir("./survivors")  # ./survivors dir must exist else the engine won't run
     engine_flags = []
     for surv_dir in survivors_dirs:
-        engine_flags.append('-add {}'.format(surv_dir))
-    engine_flags.append('-add {}'.format(system_survivors_dir))
-    engine_flags.append('-wars {}'.format(num_wars))
+        engine_flags.append("-add {}".format(surv_dir))
+    engine_flags.append("-add {}".format(system_survivors_dir))
+    engine_flags.append("-wars {}".format(num_wars))
     command = "echo '{flags} \\n'| java -cp {engine} {runclass}".format(
-        flags=' \\n '.join(engine_flags), engine=ENGINE_JAR, runclass=AUTO_COREWARS_CLASS)
+        flags=" \\n ".join(engine_flags), engine=ENGINE_JAR, runclass=AUTO_COREWARS_CLASS
+    )
     logger.info("Running {}".format(command))
-    game_results = subprocess.check_output(
-        command, shell=True, stderr=subprocess.DEVNULL)
+    game_results = subprocess.check_output(command, shell=True, stderr=subprocess.DEVNULL)
     logger.debug("Results: {}".format(game_results))
     teamscores = parse_game_results(game_results)
     logger.debug(teamscores)
     return teamscores
 
 
-def main(survivors_dirs: List[str], system_survivors_dir: str, num_wars: int,  update_db: bool):
+def main(survivors_dirs: List[str], system_survivors_dir: str, num_wars: int, update_db: bool):
     # For each survivor we got, we want to run against the system survivors,
     # And print the result
     for survivors_dir in survivors_dirs:
@@ -120,16 +119,27 @@ def main(survivors_dirs: List[str], system_survivors_dir: str, num_wars: int,  u
         print("{}: {}".format(survivor_name, team_scores[survivor_name]))
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('--survivor-dir', type=str, nargs='+',
-                        help='Survivor dirs to run against. For each dir run a seperate competition against the system.', required=True)
-    parser.add_argument('--system-survivors-dir', type=str,
-                        help='System survivors that will participate in every game', required=True)
-    parser.add_argument('--wars', type=int,
-                        help='Number of wars to run in each competition', required=False, default=500)
-    parser.add_argument('--update-db', action="store_true",
-                        help='Whether to update the results in the profiles in the databse. ', required=False)
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Process some integers.")
+    parser.add_argument(
+        "--survivor-dir",
+        type=str,
+        nargs="+",
+        help="Survivor dirs to run against. For each dir run a seperate competition against the system.",
+        required=True,
+    )
+    parser.add_argument(
+        "--system-survivors-dir", type=str, help="System survivors that will participate in every game", required=True
+    )
+    parser.add_argument(
+        "--wars", type=int, help="Number of wars to run in each competition", required=False, default=500
+    )
+    parser.add_argument(
+        "--update-db",
+        action="store_true",
+        help="Whether to update the results in the profiles in the databse. ",
+        required=False,
+    )
 
     args = parser.parse_args()
     main(args.survivor_dir, args.system_survivors_dir, args.wars, args.update_db)
