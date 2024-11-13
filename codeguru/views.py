@@ -81,7 +81,7 @@ def group(request, id=None):
             "is_expired": link_expired,
             "group": current_group,
             "members": members,
-            "is_in_group": (request.user.profile in member_profiles) if request.user.is_authenticated else False,
+            "is_in_group": (current_group == request.user.profile.group) if request.user.is_authenticated else False,
         },
     )
 
