@@ -60,7 +60,12 @@ def group(request, id=None):
     if not current_group:
         return error(request, "Group not found.")
 
-    members = Profile.objects.all().filter(group=current_group)
+    members = list(User.objects.all().filter(profile__group__exact=current_group))
+    members.sort(key=lambda member: member.username)
+
+    # Sort for group owner to be appear first. When sorting python puts False before True
+    group_owner = members[0].profile.group.owner
+    members.sort(key=lambda member: member != group_owner)
 
     try:
         link_expired = current_group.invite.expired
@@ -75,7 +80,7 @@ def group(request, id=None):
             "is_expired": link_expired,
             "group": current_group,
             "members": members,
-            "is_in_group": (request.user.profile in members) if request.user.is_authenticated else False,
+            "is_in_group": (current_group == request.user.profile.group) if request.user.is_authenticated else False,
         },
     )
 
