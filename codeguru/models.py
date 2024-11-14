@@ -2,6 +2,7 @@ import re
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext_lazy as _
@@ -36,6 +37,13 @@ class Competition(models.Model):
     """
 
     name = models.CharField(max_length=50, unique=True)
+    survivor_signature_enabled = models.BooleanField(default=True)
+    survivor_signature_gap = models.PositiveIntegerField(default=49)
+    survivor_signature_offset = models.PositiveIntegerField(default=0)
+    survivor_signature_value = models.PositiveIntegerField(
+        validators=[MinValueValidator(0x00), MaxValueValidator(0xFF)], default=0x90
+    )
+    survivor_max_length = models.PositiveIntegerField(default=512)
 
     def __str__(self):
         return self.name

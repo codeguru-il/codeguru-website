@@ -12,12 +12,6 @@ from django.utils import timezone
 
 from codeguru.models import CgGroup, Competition
 from war.storage import get_survivor_path, submissions_storage
-from website.settings import (
-    SURVIVOR_SIGNATURE_ENABLED,
-    SURVIVOR_SIGNATURE_GAP,
-    SURVIVOR_SIGNATURE_OFFSET,
-    SURVIVOR_SIGNATURE_VALUE,
-)
 
 
 class Challenge(models.Model):
@@ -72,17 +66,44 @@ def bin_max(value):
         return value
 
 
-def survivor_signature(value):
-    machine_code = value.file.read()
-    if not machine_code:
-        raise ValidationError("Survivor may not be empty.")
+class SurvivorMachineCodeValidator:
+    """
+    Validates the machine code submitted for a survivor.
 
-    if SURVIVOR_SIGNATURE_ENABLED:
+    Ensures that a file submitted for a survivor is not empty, and is less than the competition's max length.
+    If signature is required for the relevant competition, this validator also verifies the file matches the signature
+    """
+
+    def __init__(self, competition: Competition) -> None:
+        self.max_length = competition.survivor_max_length
+        self.signature_enabled = competition.survivor_signature_enabled
+        self.signature_gap = competition.survivor_signature_gap
+        self.signature_offset = competition.survivor_signature_offset
+        self.signature_byte = competition.survivor_signature_value
+
+    def __call__(self, value):
+        machine_code = value.file.read()
+        if not machine_code:
+            raise ValidationError("Survivor may not be empty.")
+
+        if len(machine_code) > self.max_length:
+            raise ValidationError("Too large.")
+
+        if not self.is_valid_signature(machine_code):
+            raise ValidationError("Invalid signature.")
+
+        return value
+
+    def is_valid_signature(self, machine_code) -> bool:
+        if not self.signature_enabled:
+            # No signature check needed
+            return True
+
         for i, byte in enumerate(machine_code):
-            if i % SURVIVOR_SIGNATURE_GAP == SURVIVOR_SIGNATURE_OFFSET and not byte == SURVIVOR_SIGNATURE_VALUE:
-                raise ValidationError("Invalid signature.")
+            if i % self.signature_gap == self.signature_offset and not byte == self.signature_byte:
+                return False
 
-    return value
+        return True
 
 
 def asm_max(value):
