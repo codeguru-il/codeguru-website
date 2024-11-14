@@ -43,6 +43,7 @@ class Competition(models.Model):
     survivor_signature_value = models.PositiveIntegerField(
         validators=[MinValueValidator(0x00), MaxValueValidator(0xFF)], default=0x90
     )
+    survivor_max_length = models.PositiveIntegerField(default=512)
 
     def __str__(self):
         return self.name

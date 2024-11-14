@@ -70,12 +70,12 @@ class SurvivorMachineCodeValidator:
     """
     Validates the machine code submitted for a survivor.
 
-    Ensures that a file submitted for a survivor is not empty.
-    If signature is required for the relevant competition,
-    this validator also verifies the file matches the signature
+    Ensures that a file submitted for a survivor is not empty, and is less than the competition's max length.
+    If signature is required for the relevant competition, this validator also verifies the file matches the signature
     """
 
     def __init__(self, competition: Competition) -> None:
+        self.max_length = competition.survivor_max_length
         self.signature_enabled = competition.survivor_signature_enabled
         self.signature_gap = competition.survivor_signature_gap
         self.signature_offset = competition.survivor_signature_offset
@@ -85,6 +85,9 @@ class SurvivorMachineCodeValidator:
         machine_code = value.file.read()
         if not machine_code:
             raise ValidationError("Survivor may not be empty.")
+
+        if len(machine_code) > self.max_length:
+            raise ValidationError("Too large.")
 
         if not self.is_valid_signature(machine_code):
             raise ValidationError("Invalid signature.")
