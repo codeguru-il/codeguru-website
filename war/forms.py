@@ -15,9 +15,7 @@ class SurvivorSubmissionForm(forms.Form):
         for i in range(1, amount_of_survivors + 1):
             self.fields[f"asm_{i}"] = forms.FileField(label=_("Assembly source file: "), validators=[asm_max])
             self.fields[f"asm_{i}"].group = i
-            self.fields[f"bin_{i}"] = forms.FileField(
-                label=_("Binary file: "), validators=[signature_validator]
-            )
+            self.fields[f"bin_{i}"] = forms.FileField(label=_("Binary file: "), validators=[signature_validator])
             self.fields[f"bin_{i}"].group = i
 
 
