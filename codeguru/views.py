@@ -11,7 +11,7 @@ from django.utils.translation import gettext
 from website.settings import CAN_REGISTER
 
 from .forms import NewCenterForm, NewGroupForm, NewUserForm
-from .models import Center, CgGroup, Invite, Message, Profile, User
+from .models import Center, CgGroup, Invite, Message, Profile, User, group_name_validator
 
 
 def error(request, msg):
@@ -39,9 +39,6 @@ def group(request, id=None):
         if request.method == "POST":
             form = NewGroupForm(request.POST)
             if form.is_valid():
-                if CgGroup.objects.filter(name=form.cleaned_data["name"]).exists():
-                    return error(request, gettext("Group already exists. try choosing another name."))
-
                 new_group = CgGroup(
                     name=form.cleaned_data["name"],
                     owner=request.user,
@@ -53,6 +50,19 @@ def group(request, id=None):
                 request.user.profile.save()
 
                 return redirect("group", id=new_group.id)
+
+            if CgGroup.objects.all().filter(name=form.data["name"]).exists():
+                return error(request, gettext("Group already exists. try choosing another name."))
+            try:
+                group_name_validator(form.data["name"])
+            except:
+                return error(
+                    request,
+                    gettext(
+                        "Group name is invalid. Groups names may only include alphanumerical characters and underscores"
+                    ),
+                )
+            return error(request, form.errors)
 
         return render(request, "group.html", render_params)
 
