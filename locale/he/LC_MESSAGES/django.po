@@ -305,6 +305,10 @@ msgstr "נרשמת בהצלחה. נשלח מייל להפעלה."
 msgid "Group already exists. try choosing another name."
 msgstr "שם הקבוצה תפוס. יש לבחור שם אחר."
 
+#: .\codeguru\views.py:57
+msgid "Group name is invalid. Groups names may only include alphanumerical characters and underscores"
+msgstr "שם הקבוצה איננו תקין. שם קבוצה יכול להכיל רק ספרות, אותיות אנגליות וקו תחתון"
+
 #: .\codeguru\views.py:99
 msgid "Center {} already exists."
 msgstr "המרכז {} כבר קיים."

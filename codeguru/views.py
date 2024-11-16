@@ -39,9 +39,6 @@ def group(request, id=None):
         if request.method == "POST":
             form = NewGroupForm(request.POST)
             if form.is_valid():
-                if CgGroup.objects.filter(name=form.cleaned_data["name"]).exists():
-                    return error(request, gettext("Group already exists. try choosing another name."))
-
                 new_group = CgGroup(
                     name=form.cleaned_data["name"],
                     owner=request.user,
@@ -53,6 +50,16 @@ def group(request, id=None):
                 request.user.profile.save()
 
                 return redirect("group", id=new_group.id)
+
+            if CgGroup.objects.all().filter(name=form.data["name"]).exists():
+                return error(request, gettext("Group already exists. try choosing another name."))
+            else:
+                return error(
+                    request,
+                    gettext(
+                        "Group name is invalid. Groups names may only include alphanumerical characters and underscores"
+                    ),
+                )
 
         return render(request, "group.html", render_params)
 
