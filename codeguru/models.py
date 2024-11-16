@@ -25,7 +25,10 @@ INVITE_TIMEOUT = 48
 def group_name_validator(name):
     expression = re.compile(R"^[a-zA-Z0-9_]+$")
     if not expression.match(name):
-        raise ValidationError("Only alphanumeric characters and underscores are allowed in group name.")
+        # translating using "_()" https://docs.djangoproject.com/en/5.1/ref/forms/validation/#raising-validationerror
+        raise ValidationError(
+            _("Group name is invalid. Groups names may only include alphanumerical characters and underscores")
+        )
     return name
 
 
