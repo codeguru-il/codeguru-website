@@ -54,7 +54,7 @@ class Competition(models.Model):
 
 class Center(models.Model):
     name = models.CharField(max_length=50)
-    ticker = models.CharField(max_length=3, unique=True)
+    ticker = models.CharField(max_length=3, unique=True, validators=[validate_center])
 
     def __str__(self) -> str:
         return f"{self.ticker} - {self.name}"

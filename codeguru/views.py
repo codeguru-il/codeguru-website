@@ -11,7 +11,7 @@ from django.utils.translation import gettext
 from website.settings import CAN_REGISTER
 
 from .forms import NewCenterForm, NewGroupForm, NewUserForm
-from .models import Center, CgGroup, Invite, Message, Profile, User, group_name_validator
+from .models import Center, CgGroup, Invite, Message, Profile, User, group_name_validator, validate_center
 
 
 def error(request, msg):
@@ -116,6 +116,11 @@ def new_center(request):
             new_center = Center(name=name, ticker=ticker)
             new_center.save()
             return redirect("group")
+        try:
+            validate_center(form.name)
+            return error(request, form.errors)
+        except:
+            return error(request, gettext("Center should be represented with 3 letters in english."))
 
     return render(request, "new_center.html", {"form": NewCenterForm})
 
