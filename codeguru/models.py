@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 def validate_center(value):
     if len(value) == 3 and value.isalpha() and value.isascii():
         return value
-    raise ValidationError("Center should be represented with 3 letters in english.")
+    raise ValidationError(_("Center should be represented with 3 letters in english."))
 
 
 def validate_length(number, length=10):
