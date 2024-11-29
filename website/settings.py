@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "codeguru.apps.CodeguruConfig",
     "war.apps.WarConfig",
+    "go.apps.GoConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

@@ -4,7 +4,6 @@ psycopg-binary==3.2.3
 django-redis==5.4.0
 django-cleanup==9.0.0
 django-alive==2.0.0
-django-localeurl==2.0.2
 whitenoise==6.8.2
 pandas==2.2.3
 django-storages[azure]==1.14.4
