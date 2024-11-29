@@ -2,49 +2,21 @@
 {% load i18n %}
 {% get_current_language as LANGUAGE_CODE %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ LANGUAGE_CODE }}">
 
 <head>
-    <link rel="stylesheet" href="{{ STATIC_URL }}style.css"/>
+    <link rel="stylesheet" href="{% static "style.css" %}"/>
     <title>{% block title %}CGX2024{% endblock %}</title>
     {% if LANGUAGE_CODE == "he" %}
         <style> html {
-            direction: rtl
+            direction: rtl;
         } </style>
     {% else %}
         <style> html {
-            direction: ltr
+            direction: ltr;
         } </style>
     {% endif %}
 </head>
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
-
-    * {
-        font-size: 22px;
-        color: #4AF626;
-        font-family: 'Space Mono', 'Courier New', monospace;
-        background-color: rgb(24, 26, 27);
-        outline: none;
-    }
-
-    input {
-        border: 5px solid green;
-    }
-
-    button.link {
-        background: none;
-        border: none;
-        text-decoration: underline;
-        cursor: pointer;
-    }
-    
-    small {
-        font-size: 80%;
-    }
-
-</style>
 
 <body>
 <div id="header">
