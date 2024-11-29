@@ -53,16 +53,7 @@ def group(request, id=None):
 
             if CgGroup.objects.all().filter(name=form.data["name"]).exists():
                 return error(request, gettext("Group already exists. try choosing another name."))
-            try:
-                group_name_validator(form.data["name"])
-            except:
-                return error(
-                    request,
-                    gettext(
-                        "Group name is invalid. Groups names may only include alphanumerical characters and underscores"
-                    ),
-                )
-            return error(request, form.errors)
+            return error(request, None, form)
 
         return render(request, "group.html", render_params)
 
@@ -116,7 +107,7 @@ def new_center(request):
             new_center = Center(name=name, ticker=ticker)
             new_center.save()
             return redirect("group")
-        return error(request, None, form=form)
+        return error(request, None, form)
 
     return render(request, "new_center.html", {"form": NewCenterForm})
 
