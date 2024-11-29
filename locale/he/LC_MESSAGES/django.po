@@ -45,7 +45,7 @@ msgstr "סמל"
 
 #: .\codeguru\models.py
 msgid "Center should be represented with 3 letters in english."
-msgstr "שם המרכז צריך להיות מורכב אך ורק משלוש אותיות אנגליות."
+msgstr "סמל המרכז צריך להיות מורכב אך ורק משלוש אותיות אנגליות."
 
 #: .\codeguru\templates\base.html:51
 msgid "CodeGuru Xtreme"
