@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 def validate_center(value):
     if len(value) == 3 and value.isalpha() and value.isascii():
         return value
-    raise ValidationError("Center should be represented with 3 letters in english.")
+    raise ValidationError(_("Center should be represented with 3 letters in english."))
 
 
 def validate_length(number, length=10):
@@ -54,7 +54,7 @@ class Competition(models.Model):
 
 class Center(models.Model):
     name = models.CharField(max_length=50)
-    ticker = models.CharField(max_length=3, unique=True)
+    ticker = models.CharField(max_length=3, unique=True, validators=[validate_center])
 
     def __str__(self) -> str:
         return f"{self.ticker} - {self.name}"

@@ -11,11 +11,11 @@ from django.utils.translation import gettext
 from website.settings import CAN_REGISTER
 
 from .forms import NewCenterForm, NewGroupForm, NewUserForm
-from .models import Center, CgGroup, Invite, Message, Profile, User, group_name_validator
+from .models import Center, CgGroup, Invite, Message, Profile, User, group_name_validator, validate_center
 
 
-def error(request, msg):
-    return render(request, "error.html", {"error_message": msg})
+def error(request, msg, form=None):
+    return render(request, "error.html", {"error_message": msg, "form": form})
 
 
 @login_required
@@ -116,6 +116,7 @@ def new_center(request):
             new_center = Center(name=name, ticker=ticker)
             new_center.save()
             return redirect("group")
+        return error(request, None, form=form)
 
     return render(request, "new_center.html", {"form": NewCenterForm})
 
