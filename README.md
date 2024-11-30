@@ -14,3 +14,8 @@ For running on Azure (production):
 - A redis cache
 - Storage: An accessible Azure Storage account with the `files` and `submissions` blob containers. Authorization is
   handled with system-assigned identities.
+
+## Legal
+This project is licensed under the [MIT License](/LICENSE.md).
+
+The repository was initially created from [idosharon/codeguru-website](https://github.com/idosharon/codeguru-website).
