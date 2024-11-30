@@ -22,3 +22,14 @@ button.link {
 small {
     font-size: 80%;
 }
+
+table, th, td {
+    border-collapse: collapse;
+    border: 1px solid #4AF626;
+    text-align: start;
+}
+
+th, td {
+    padding-inline-start: 0.3em;
+    padding-inline-end: 0.3em;
+}

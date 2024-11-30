@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% load war_extras %}
+{% load i18n %}
+
+{% block content %}
+    <h1>{% trans "Validate survivor" %}</h1>
+    <table>
+        <tr>
+            <th>{% trans "Competition" %}</th>
+            <td>{{ competition.name }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Survivor max length" %}</th>
+            <td>{{ competition.survivor_max_length }}</td>
+        </tr>
+        <tr>
+            <th>{% trans "Survivor signature" %}</th>
+            <td>{% if competition.survivor_signature_enabled %}NOP (0x90) {% trans "every" %}
+                {{ competition.survivor_signature_gap }} {% trans "bytes" %}{% else %}
+                {% trans "disabled" %}{% endif %}</td>
+        </tr>
+    </table>
+
+    <table style="margin-top: 10px;">
+        <thead>
+        <tr>
+            <th></th>
+            <th>x0</th>
+            <th>x1</th>
+            <th>x2</th>
+            <th>x3</th>
+            <th>x4</th>
+            <th>x5</th>
+            <th>x6</th>
+            <th>x7</th>
+            <th>x8</th>
+            <th>x9</th>
+            <th>xA</th>
+            <th>xB</th>
+            <th>xC</th>
+            <th>xD</th>
+            <th>xE</th>
+            <th>xF</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for b in survivor %}
+            {% with position=forloop.counter0|modulo:16 %}
+                {% with offset=competition.survivor_signature_gap %}
+                    {% if position == 0 %}
+                        <tr>
+                        <th>{{ forloop.counter0|sub:position|to_hex:3 }}</th>{% endif %}
+                <td>
+                    {% if forloop.counter0|modulo:offset == 0 %}
+                        <b>
+                            {% if b == '90' %}{{ b }}{% else %}<span style="color: red;">{{ b }}</span>{% endif %}
+                            {% else %}{{ b }}
+                        </b>
+                    {% endif %}
+                </td>
+                {% if forloop.counter0|modulo:16 == 15 %}</tr>{% endif %}
+                {% endwith %}
+            {% endwith %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+{% endblock %}

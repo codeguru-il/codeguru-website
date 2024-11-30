@@ -1,3 +1,4 @@
+import base64
 import re
 
 from django.contrib.auth.decorators import login_required
@@ -174,3 +175,16 @@ def war_page(request, id):
         )
     except War.DoesNotExist:
         return error(request, gettext("War not found"))
+
+
+@login_required
+def survivor_validator_page(request):
+    # survivor_bytes = request.FILES["survivor"].read()
+    survivor_bytes = base64.b64decode("kMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzJDMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyQzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMkMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzJDMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyQzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMkMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzJDMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyQzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMkMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzJDMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMyQzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMzMw=")
+
+    survivor_hex_bytes = [*(f"{b:x}".rjust(2, '0').upper() for b in survivor_bytes)]
+
+    return render(request, 'survivor_validator.html', {
+        "competition": request.user.profile.group.competition,
+        "survivor": survivor_hex_bytes,
+    })
