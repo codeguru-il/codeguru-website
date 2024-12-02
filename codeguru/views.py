@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.utils import translation
 from django.utils.crypto import get_random_string
 from django.utils.translation import gettext
+from os import environ
 
 from website.settings import CAN_REGISTER
 
@@ -117,6 +118,8 @@ def register(request):
         return redirect("profile/")
     if request.method == "POST":
         form = NewUserForm(request.POST, request.FILES)
+        if environ.get("BLOCK_REGISTRATION") != None:
+            return error(request,  gettext("The registration for this year's competition has closed"))
         if form.is_valid():
             try:
                 user = form.save()
