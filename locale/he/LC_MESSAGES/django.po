@@ -317,6 +317,10 @@ msgstr "שם הקבוצה איננו תקין. שם קבוצה יכול להכי
 msgid "Center {} already exists."
 msgstr "המרכז {} כבר קיים."
 
+#: .\codeguru\views.py:122
+msgid "The registration for this year's competition has closed."
+msgstr "ההרשמה לתחרות עבור השנה הזאת נסגרה."
+
 #: .\codeguru\views.py:127
 msgid "You must leave your group first."
 msgstr "עליך לעזוב את הקבוצה שלך תחילה."

@@ -1,3 +1,5 @@
+from os import environ
+
 from django.conf import settings
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -117,6 +119,8 @@ def register(request):
         return redirect("profile/")
     if request.method == "POST":
         form = NewUserForm(request.POST, request.FILES)
+        if "BLOCK_REGISTRATION" in environ:
+            return error(request, gettext("The registration for this year's competition has closed."))
         if form.is_valid():
             try:
                 user = form.save()
