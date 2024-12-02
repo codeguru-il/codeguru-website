@@ -119,7 +119,7 @@ def register(request):
         return redirect("profile/")
     if request.method == "POST":
         form = NewUserForm(request.POST, request.FILES)
-        if environ.get("BLOCK_REGISTRATION") != None:
+        if "BLOCK_REGISTRATION" in environ:
             return error(request, gettext("The registration for this year's competition has closed."))
         if form.is_valid():
             try:
