@@ -8,11 +8,12 @@ class SurvivorSubmissionForm(forms.Form):
     def __init__(self, *args, **kwargs):
         war: War = kwargs.pop("war")
         amount_of_survivors = war.amount_of_survivors
+        survivor_numbering_start = war.survivor_numbering_start
         super(SurvivorSubmissionForm, self).__init__(*args, **kwargs)
 
         signature_validator = SurvivorMachineCodeValidator(competition=war.competition)
 
-        for i in range(1, amount_of_survivors + 1):
+        for i in range(survivor_numbering_start, survivor_numbering_start + amount_of_survivors):
             self.fields[f"asm_{i}"] = forms.FileField(label=_("Assembly source file: "), validators=[asm_max])
             self.fields[f"asm_{i}"].group = i
             self.fields[f"bin_{i}"] = forms.FileField(label=_("Binary file: "), validators=[signature_validator])

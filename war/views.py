@@ -144,6 +144,7 @@ def war_page(request, id):
 
         is_solved_requirements = is_solved_riddles and is_solved_wars
         required = required_riddles + required_wars
+        survivor_numbering_start = war.survivor_numbering_start
 
         if request.method == "POST":
             if not war.active:
@@ -152,7 +153,7 @@ def war_page(request, id):
             if form.is_valid():
                 for surv in prev_surv:
                     surv.delete()
-                for i in range(1, war.amount_of_survivors + 1):
+                for i in range(survivor_numbering_start, survivor_numbering_start + war.amount_of_survivors):
                     Survivor(
                         group=group,
                         war=war,

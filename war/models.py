@@ -130,6 +130,7 @@ class War(Challenge):
     amount_of_survivors = models.PositiveIntegerField(default=2, validators=[MinValueValidator(1)])
     zombie_mode = models.BooleanField(default=False)
     required_wars = models.ManyToManyField("self", symmetrical=False, blank=True)
+    survivor_numbering_start = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
 
 
 class Survivor(models.Model):
