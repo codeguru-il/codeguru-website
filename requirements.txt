@@ -11,6 +11,6 @@ django-storages[azure]==1.14.4
 azure-identity==1.19.0
 azure-core==1.32.0
 
-black==24.10.0
+black==25.1.0
 isort==5.13.2
 python-dotenv==1.0.1
