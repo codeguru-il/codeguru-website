@@ -67,14 +67,3 @@ DATABASES = {
         "PASSWORD": conn_str_params["Password"],
     }
 }
-
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.getenv("REDISCACHECONNSTR_AZURE_REDIS_CONNECTIONSTRING"),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "COMPRESSOR": "django_redis.compressors.zlib.ZlibCompressor",
-        },
-    }
-}

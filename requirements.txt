@@ -1,6 +1,6 @@
 django==5.1.6
-psycopg==3.2.3
-psycopg-binary==3.2.3
+psycopg==3.2.5
+psycopg-binary==3.2.5
 django-redis==5.4.0
 django-cleanup==9.0.0
 django-alive==2.0.0
