@@ -13,4 +13,4 @@ azure-core==1.32.0
 
 black==25.1.0
 isort==5.13.2
-python-dotenv==1.0.1
+python-dotenv==1.2.1
